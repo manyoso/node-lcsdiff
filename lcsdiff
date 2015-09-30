@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var diff = require('./diff.js');
+
+var usage = 'Usage: diffjs /path/to/file_one /path/to/file_two';
+if (process.argv.length != 4) {
+  console.log(usage);
+  process.exit(1);
+}
+
+var file1;
+try {
+  file1 = fs.readFileSync(process.argv[2], 'utf8');
+} catch (e) {
+  console.log('Error: First argument could not be opened as a file.');
+  process.exit(1);
+}
+
+var file2;
+try {
+  file2 = fs.readFileSync(process.argv[3], 'utf8');
+} catch (e) {
+  console.log('Error: Second argument could not be opened as a file.');
+  process.exit(1);
+}
+
+console.log(diff.diff(file1, file2));
